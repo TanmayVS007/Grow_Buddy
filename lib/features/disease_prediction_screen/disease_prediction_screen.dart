@@ -19,7 +19,8 @@ class _DiseasePredictionScreenState extends State<DiseasePredictionScreen> {
 
   // Method to select image from gallery
   Future<void> _selectFromGallery() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path); // Store the selected image
@@ -44,6 +45,8 @@ class _DiseasePredictionScreenState extends State<DiseasePredictionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Disease Prediction'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

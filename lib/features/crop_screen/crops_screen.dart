@@ -24,6 +24,8 @@ class _CropsScreenState extends State<CropsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Crops"),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
