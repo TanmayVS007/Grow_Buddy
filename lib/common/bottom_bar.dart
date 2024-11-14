@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:grow_buddy/constants/global_variables.dart';
 import 'package:grow_buddy/features/crop_screen/crops_screen.dart';
-import 'package:grow_buddy/features/disease_prediction_screen/disease_prediction_screen.dart';
 import 'package:grow_buddy/features/profile_screen/profile_screen.dart';
+import 'package:grow_buddy/features/disease_prediction_screen/disease_prediction_screen.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';

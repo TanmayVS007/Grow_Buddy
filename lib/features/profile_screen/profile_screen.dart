@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:grow_buddy/features/login_screen/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String routeName = "/profile-screen";
@@ -13,7 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile Page"),
+        title: const Text("Profile"),
         centerTitle: true,
         backgroundColor: Colors.teal,
       ),
@@ -26,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const CircleAvatar(
                 radius: 60,
                 backgroundImage: AssetImage(
-                  "assets/images/ava_adam_profile.jpg",
+                  "assets/images/profile.png",
                 ),
               ),
               const SizedBox(height: 16),
@@ -118,6 +120,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Navigator.pushNamed(context, LoginScreen.routeName);
+                  });
+                },
+                child: const Text(
+                  "Log Out",
                 ),
               ),
             ],
