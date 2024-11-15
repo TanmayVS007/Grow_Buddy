@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:grow_buddy/common/splash_screen.dart';
 import 'package:grow_buddy/constants/global_variables.dart';
 import 'package:grow_buddy/features/register_screen/register_screen.dart';
 import 'package:grow_buddy/router.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const RegisterScreen(),
+      home: const SplashScreen(),
     );
   }
 }

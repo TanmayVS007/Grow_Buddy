@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grow_buddy/common/bottom_bar.dart';
 import 'package:grow_buddy/features/register_screen/register_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "/login-screen";
@@ -34,6 +35,12 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Lottie.asset(
+                  'assets/anime/animation1.json',
+                  height: 150,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(height: 16),
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(

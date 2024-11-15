@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grow_buddy/features/login_screen/login_screen.dart';
 
@@ -11,6 +13,67 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late String _userName = '';
+  late String _userEmail = '';
+  late String _userPhone = '';
+  late String _userState = '';
+  late String _userCity = '';
+  late String _userAge = '';
+  late String _userMainCrops = '';
+  late String _userLandArea = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  bool _isLoading = true;
+
+  Future<void> _fetchUserData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        if (userDoc.exists) {
+          setState(() {
+            _userName = userDoc['name'] ?? 'No name';
+            _userEmail = user.email ?? 'No email';
+            _userPhone = userDoc['phone'] ?? 'No phone number';
+            _userState = userDoc['state'] ?? 'No state';
+            _userCity = userDoc['city'] ?? 'No city';
+            _userAge = userDoc['age'] ?? 'No age';
+            _userMainCrops = userDoc['main_crops'] ?? 'No crops listed';
+            _userLandArea = userDoc['land_area'] ?? 'No land area listed';
+          });
+        } else {
+          // Handle case where document doesn't exist
+          setState(() {
+            _userName = 'No name';
+            _userEmail = 'No email';
+            _userPhone = 'No phone number';
+            _userState = 'No state';
+            _userCity = 'No city';
+            _userAge = 'No age';
+            _userMainCrops = 'No crops listed';
+            _userLandArea = 'No land area listed';
+          });
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching user data: $e");
+      }
+    }
+    setState(() {
+      _isLoading = false; // Set loading flag to false in case of an error
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,124 +82,122 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         backgroundColor: Colors.teal,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // Profile Picture
-              const CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage(
-                  "assets/images/profile.png",
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "Ava Adams",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "avaadams@pornhub.com",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[700],
-                ),
-              ),
-              const SizedBox(height: 24),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Personal Information",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    // Profile Picture
+                    const CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage(
+                        "assets/images/profile.png",
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      _userName,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _userEmail,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Personal Information",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            ProfileDetailRow(
+                              icon: Icons.phone,
+                              title: "Phone",
+                              value: _userPhone,
+                            ),
+                            ProfileDetailRow(
+                              icon: Icons.location_on,
+                              title: "Location",
+                              value: "$_userCity, $_userState",
+                            ),
+                            ProfileDetailRow(
+                              icon: Icons.calendar_today,
+                              title: "Age",
+                              value: _userAge,
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 10),
-                      ProfileDetailRow(
-                        icon: Icons.phone,
-                        title: "Phone",
-                        value: "+123 456 7890",
+                    ),
+                    const SizedBox(height: 24),
+                    Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      ProfileDetailRow(
-                        icon: Icons.location_on,
-                        title: "Location",
-                        value: "Winterfell",
-                      ),
-                      ProfileDetailRow(
-                        icon: Icons.calendar_today,
-                        title: "Date of Birth",
-                        value: "January 1, 0001",
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Additional Information",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Additional Information",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            ProfileDetailRow(
+                              icon: Icons.agriculture,
+                              title: "Main Crops",
+                              value: _userMainCrops,
+                            ),
+                            ProfileDetailRow(
+                              icon: Icons.landscape,
+                              title: "Area",
+                              value: _userLandArea,
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 10),
-                      ProfileDetailRow(
-                          icon: Icons.favorite,
-                          title: "Favorite Color",
-                          value: "Teal"),
-                      ProfileDetailRow(
-                        icon: Icons.work,
-                        title: "Occupation",
-                        value: "Guardian of the Realm",
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut().then((value) {
+                          Navigator.pushNamed(context, LoginScreen.routeName);
+                        });
+                      },
+                      child: const Text(
+                        "Log Out",
                       ),
-                      ProfileDetailRow(
-                        icon: Icons.hiking,
-                        title: "Hobbies",
-                        value: "Sword Fighting, Horse Riding",
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut().then((value) {
-                    Navigator.pushNamed(context, LoginScreen.routeName);
-                  });
-                },
-                child: const Text(
-                  "Log Out",
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
