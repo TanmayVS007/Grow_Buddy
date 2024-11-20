@@ -30,7 +30,7 @@ class _PricePredictionScreenState extends State<PricePredictionScreen> {
   }
 
   Future<void> fetchPricePrediction(String cropName) async {
-    const String url = "http://192.168.0.16:5000/forecast";
+    const String url = "http://192.168.94.159:5000/forecast";
     final Map<String, String> requestBody = {
       "croptype": cropName.toLowerCase()
     };
@@ -53,9 +53,9 @@ class _PricePredictionScreenState extends State<PricePredictionScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          currentValue = data["average_price"].toString();
-          minValue = data["min_price"].toString();
-          maxValue = data["max_price"].toString();
+          currentValue = (data["average_price"] / 100).toStringAsFixed(2);
+          minValue = (data["min_price"] / 100).toStringAsFixed(2);
+          maxValue = (data["max_price"] / 100).toStringAsFixed(2);
           isLoading = false;
         });
       } else {
@@ -122,7 +122,7 @@ class _PricePredictionScreenState extends State<PricePredictionScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         "Average Price: $currentValue",
-                        style: const TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 24),
                       ),
                     ),
                   ),
@@ -140,7 +140,7 @@ class _PricePredictionScreenState extends State<PricePredictionScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         "Minimum Price: $minValue",
-                        style: const TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 24),
                       ),
                     ),
                   ),
@@ -158,7 +158,7 @@ class _PricePredictionScreenState extends State<PricePredictionScreen> {
                       alignment: Alignment.center,
                       child: Text(
                         "Maximum Price: $maxValue",
-                        style: const TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w400,),
                       ),
                     ),
                   ),
