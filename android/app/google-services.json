@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "744866468853",
+    "project_id": "farmer-s-buddy-19512",
+    "storage_bucket": "farmer-s-buddy-19512.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744866468853:android:fca5fdb5389236cb7d06bc",
+        "android_client_info": {
+          "package_name": "com.example.gr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS4s0G9Vc1VQ2u646VHO95F42EZt2QQtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744866468853:android:67e93e7083378bff7d06bc",
+        "android_client_info": {
+          "package_name": "com.example.grow_buddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS4s0G9Vc1VQ2u646VHO95F42EZt2QQtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

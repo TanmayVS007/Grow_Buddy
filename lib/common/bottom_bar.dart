@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:grow_buddy/constants/global_variables.dart';
 import 'package:grow_buddy/features/crop_screen/crops_screen.dart';
-import 'package:grow_buddy/features/disease_prediction_screen/disease_prediction_screen.dart';
 import 'package:grow_buddy/features/profile_screen/profile_screen.dart';
+import 'package:grow_buddy/features/disease_prediction_screen/disease_prediction_screen.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -46,102 +46,61 @@ class _BottomBarState extends State<BottomBar> {
         items: [
           // Home
           BottomNavigationBarItem(
-            icon: Tooltip(
-              message: "Crops",
-              showDuration: const Duration(seconds: 1),
-              child: Container(
-                width: bottomBarWidth,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: _page == 0
-                          ? GlobalVariables.selectedNavBarColor
-                          : GlobalVariables.backgroundColor,
-                      width: bottomBarBorderWidth,
-                    ),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: _page == 1
-                      ? Image.asset(
-                          "assets/images/mon.jpg",
-                          fit: BoxFit.fitHeight,
-                          height: height * .04,
-                        )
-                      : Image.asset(
-                          "assets/images/money.jpg",
-                          fit: BoxFit.fitHeight,
-                          height: height * .04,
-                        ),
-                ),
+            icon: SizedBox(
+              width: bottomBarWidth,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 2.0),
+                child: _page == 0
+                    ? Image.asset(
+                        "assets/images/money.png",
+                        fit: BoxFit.fitHeight,
+                        height: height * .04,
+                      )
+                    : Image.asset(
+                        "assets/images/mon.png",
+                        fit: BoxFit.fitHeight,
+                        height: height * .04,
+                      ),
               ),
             ),
-            label: "",
+            label: "Crops",
           ),
           // Account
           BottomNavigationBarItem(
-            icon: Tooltip(
-              message: "Disease Detection",
-              child: Container(
-                width: bottomBarWidth,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: _page == 1
-                          ? GlobalVariables.selectedNavBarColor
-                          : GlobalVariables.backgroundColor,
-                      width: bottomBarBorderWidth,
-                    ),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: _page == 1
-                      ? Image.asset(
-                          "assets/images/selected_scanner.jpg",
-                          fit: BoxFit.fitHeight,
-                          height: height * .04,
-                        )
-                      : Image.asset(
-                          "assets/images/scanner.png",
-                          fit: BoxFit.fitHeight,
-                          height: height * .04,
-                        ),
-                ),
+            icon: SizedBox(
+              width: bottomBarWidth,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 2.0),
+                child: _page == 1
+                    ? Image.asset(
+                        "assets/images/selected_scanner.png",
+                        fit: BoxFit.fitHeight,
+                        height: height * .04,
+                      )
+                    : Image.asset(
+                        "assets/images/scanner.png",
+                        fit: BoxFit.fitHeight,
+                        height: height * .04,
+                      ),
               ),
             ),
-            label: "",
+            label: "Disease Detection",
           ),
           // Cart
           BottomNavigationBarItem(
-            icon: Tooltip(
-              message: "Profile",
-              child: Container(
-                width: bottomBarWidth,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: _page == 2
-                          ? GlobalVariables.selectedNavBarColor
-                          : GlobalVariables.backgroundColor,
-                      width: bottomBarBorderWidth,
-                    ),
-                  ),
+            icon: SizedBox(
+              width: bottomBarWidth,
+              child: const badges.Badge(
+                badgeStyle: badges.BadgeStyle(
+                  badgeColor: Colors.white,
                 ),
-                child: const badges.Badge(
-                  // badgeContent: Text("2"),
-                  badgeStyle: badges.BadgeStyle(
-                    badgeColor: Colors.white,
-                  ),
-                  child: Icon(
-                    Icons.person_outline_outlined,
-                    size: 35,
-                  ),
+                child: Icon(
+                  Icons.person_outline_outlined,
+                  size: 35,
                 ),
               ),
             ),
-            label: "",
+            label: "Profile",
           ),
         ],
       ),
